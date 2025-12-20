@@ -10,4 +10,5 @@ dependencies = [
     "dotenv>=0.9.9",
     "psycopg2>=2.9.11",
     "ruff>=0.14.10",
+    "whitenoise>=6.11.0",
 ]
