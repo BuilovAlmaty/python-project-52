@@ -17,7 +17,7 @@ build:
 	./build.sh
 
 render-start:
-	python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
+	python -m gunicorn task_manager.task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
 
 install:
