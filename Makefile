@@ -18,3 +18,12 @@ build:
 
 render-start:
 	gunicorn task_manager.wsgi
+
+install:
+	uv sync
+
+collectstatic:
+	$(MANAGE) collectstatic --noinput
+
+migrate:
+	$(MANAGE) migrate
