@@ -1,4 +1,4 @@
-MANAGE := uv run python3 task_manager/manage.py
+MANAGE := uv run python3 manage.py
 PORT := 8000
 
 .PHONY: dev
@@ -17,7 +17,7 @@ build:
 	./build.sh
 
 render-start:
-	python -m gunicorn task_manager.task_manager.asgi:application -k uvicorn.workers.UvicornWorker
+	python -m gunicorn task_manager.asgi:application -k uvicorn.workers.UvicornWorker
 
 
 install:
