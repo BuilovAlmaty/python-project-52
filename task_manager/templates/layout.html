@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% trans "Task manager" %}{% endblock %}</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</head>
+<body>
+<main>
+    <nav class="py-2 bg-body-tertiary border-bottom">
+        <div class="container d-flex flex-wrap align-items-center">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="#" class="nav-link px-2 active">{% trans "Home" %}</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2">{% trans "Users" %}</a></li>
+            </ul>
+
+            <ul class="nav align-items-center">
+                <li class="nav-item"><a href="#" class="nav-link px-2">{% trans "Login" %}</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2">{% trans "Sign up" %}</a></li>
+
+                <!-- Dropdown выбора языка -->
+                <li class="nav-item dropdown">
+                    <form action="{% url 'set_language' %}" method="post" class="m-0">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.path }}">
+                        <select name="language" class="form-select form-select-sm dropdown-toggle"
+                                onchange="this.form.submit()" style="display:inline-block; width:auto;">
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang_code, _ in LANGUAGES %}
+                                <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                                    {{ lang_code }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+</html>
