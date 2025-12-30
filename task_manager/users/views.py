@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.db.models.deletion import ProtectedError
+from django.contrib.auth import update_session_auth_hash
 
 
 # Create your views here.
@@ -73,7 +74,8 @@ class UserUpdateView(View):
     def post(self, request, *args, **kwargs):
         form = UserUpdateForm(request.POST, instance=self.user_obj)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            update_session_auth_hash(request, user)
             messages.success(request, _("User has been updated successfully."))
             return redirect("users:index")
         return render(request, self.template_name, {"form": form})
