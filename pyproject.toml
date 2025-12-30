@@ -10,12 +10,8 @@ dependencies = [
     "django-bootstrap5>=25.3",
     "dotenv>=0.9.9",
     "gunicorn>=23.0.0",
-    "psycopg2>=2.9.11",
     "ruff>=0.14.10",
     "uvicorn>=0.38.0",
     "whitenoise>=6.11.0",
+    "psycopg2-binary==2.9.11"
 ]
-
-[tool.poetry.dependencies]
-psycopg2-binary = "2.9.11"
-
