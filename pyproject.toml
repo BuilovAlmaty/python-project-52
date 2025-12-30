@@ -14,7 +14,8 @@ dependencies = [
     "psycopg2-binary==2.9.11",
     "rollbar>=1.0.0",
     "ruff>=0.14.10",
-    "uvicorn>=0.38.0"
+    "uvicorn>=0.38.0",
+    "django-filter>=23.1"
 ]
 
 [tool.uv.build-system]
