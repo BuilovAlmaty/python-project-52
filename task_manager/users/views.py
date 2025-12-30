@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import CreateForm, UserUpdateForm, UserSetPasswordForm
+from .forms import CreateForm, UserUpdateForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.utils.translation import gettext_lazy as _
 from django.views import View
@@ -60,51 +60,27 @@ class UserUpdateView(View):
     template_name = "users/update.html"
 
     def dispatch(self, request, *args, **kwargs):
-        user = get_object_or_404(User, pk=kwargs["pk"])
+        self.user_obj = get_object_or_404(User, pk=kwargs["pk"])
 
-        if request.user != user:
+        if request.user != self.user_obj:
             messages.error(request, _("You cannot edit another user's profile."))
             return redirect("users:index")
 
-        self.user_obj = user
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        pk = kwargs.get("pk")
-        user = get_object_or_404(User, pk=pk)
-
-        user_form = UserUpdateForm(instance=user)
-        password_form = UserSetPasswordForm(user)
-
-        return render(
-            request,
-            self.template_name,
-            {
-                "form": user_form,
-                "password_form": password_form,
-            },
-        )
+        form = UserUpdateForm(instance=self.user_obj)
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request, *args, **kwargs):
-        pk = kwargs.get("pk")
-        user = get_object_or_404(User, pk=pk)
+        form = UserUpdateForm(request.POST, instance=self.user_obj)
 
-        user_form = UserUpdateForm(request.POST, instance=user)
-        password_form = UserSetPasswordForm(user, request.POST)
-
-        if user_form.is_valid() and password_form.is_valid():
-            user_form.save()
-            password_form.save()
+        if form.is_valid():
+            form.save()
             messages.success(request, _("User has been updated successfully."))
             return redirect("users:index")
-        return render(
-            request,
-            self.template_name,
-            {
-                "form": user_form,
-                "password_form": password_form,
-            },
-        )
+
+        return render(request, self.template_name, {"form": form})
 
 
 class UserDeleteView(View):

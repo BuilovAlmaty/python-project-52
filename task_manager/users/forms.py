@@ -35,21 +35,43 @@ class CreateForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+    password1 = forms.CharField(
+        label=_("Пароль"),
+        required=False,
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+    password2 = forms.CharField(
+        label=_("Подтверждение пароля"),
+        required=False,
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+
     class Meta:
         model = User
-        fields = [
-            "username",
-            "first_name",
-            "last_name",
-        ]
+        fields = ["username", "first_name", "last_name"]
+        widgets = {
+            "username": forms.TextInput(attrs={"class": "form-control", "readonly": True}),
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+        }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].disabled = True
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['placeholder'] = field.label
-            field.help_text = HELP_TEXTS.get(field_name, "")
+    def clean(self):
+        cleaned_data = super().clean()
+        p1 = cleaned_data.get("password1")
+        p2 = cleaned_data.get("password2")
+        if p1 or p2:
+            if p1 != p2:
+                raise ValidationError(_("Пароли не совпадают"))
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get("password1")
+        if password:
+            user.set_password(password)
+        if commit:
+            user.save()
+        return user
 
 
 class UserSetPasswordForm(SetPasswordForm):
