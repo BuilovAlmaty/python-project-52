@@ -9,28 +9,31 @@
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <h1 class="h1 mb-4 fw-normal text-center">{% block title %}{% endblock %}</h1>
+
                 {% if form %}
                     {% for field in form %}
-                    <div class="form-floating mb-3">
-                        {{ field }}
+                    <div class="mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
                         {% if field.errors %}
                         <div class="text-danger mt-1">{{ field.errors }}</div>
                         {% endif %}
                     </div>
                     {% endfor %}
                 {% endif %}
+
                 {% if password_form %}
                     {% for field in password_form %}
-                    <div class="form-floating mb-3">
-                        {{ field }}
+                    <div class="mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
                         {% if field.errors %}
                         <div class="text-danger mt-1">{{ field.errors }}</div>
                         {% endif %}
                     </div>
                     {% endfor %}
                 {% endif %}
+
                 <div class="d-grid">
                     <button class="btn btn-primary py-2" type="submit">{% block btn %}{% endblock %}</button>
                 </div>

@@ -10,25 +10,13 @@
                 {% csrf_token %}
                 <h1 class="h1 mb-4 fw-normal text-center">{% block title %}{% endblock %}</h1>
                 {% for field in form %}
-                {% if field.name == "labels" %}
                 <div class="mb-3">
-                    <label class="form-label" for="{{ field.id_for_label }}">
-                        {{ field.label }}
-                    </label>
-                    {{ field }}
-                    {% if field.errors %}
-                    <div class="text-danger mt-1">{{ field.errors }}</div>
-                    {% endif %}
-                </div>
-                {% else %}
-                <div class="form-floating mb-3">
-                    {{ field }}
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
                     {% if field.errors %}
                     <div class="text-danger mt-1">{{ field.errors }}</div>
                     {% endif %}
                 </div>
-                {% endif %}
                 {% endfor %}
                 <div class="d-grid">
                     <button class="btn btn-primary py-2" type="submit">{% block btn %}{% endblock %}</button>
