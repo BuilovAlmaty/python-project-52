@@ -12,11 +12,16 @@ dependencies = [
     "gunicorn>=23.0.0",
     "ruff>=0.14.10",
     "uvicorn>=0.38.0",
-    "whitenoise>=6.11.0",
-    "psycopg2-binary==2.9.11"
+    "whitenoise>=6.11.0"
 ]
 
-packages = [
-    "task_manager",
-    "locale"
-]
+[tool.uv.dependencies]
+psycopg2-binary = "2.9.11"
+
+[tool.uv.build-system]
+backend = "setuptools.build_meta"
+requires = ["setuptools>=65", "wheel"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["task_manager", "locale"]
