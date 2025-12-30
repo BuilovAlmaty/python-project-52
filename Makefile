@@ -31,3 +31,5 @@ migrate:
 
 test:
 	uv run manage.py test
+po:
+	uv run manage.py compilemessages

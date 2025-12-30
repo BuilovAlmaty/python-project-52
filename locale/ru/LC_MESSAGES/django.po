@@ -29,6 +29,9 @@ msgstr "Выход"
 msgid "Sign up"
 msgstr "Регистрация"
 
+msgid "Register"
+msgstr "Зарегистрировать"
+
 msgid "Please sign up"
 msgstr "Пожалуйста зарегистрируйтесь"
 
