@@ -38,19 +38,19 @@ class UserUpdateForm(forms.ModelForm):
     password1 = forms.CharField(
         label=_("Пароль"),
         required=False,
-        widget=forms.PasswordInput(attrs={"class": "form-control"})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Пароль")})
     )
     password2 = forms.CharField(
         label=_("Подтверждение пароля"),
         required=False,
-        widget=forms.PasswordInput(attrs={"class": "form-control"})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Подтверждение пароля")})
     )
 
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name"]
         widgets = {
-            "username": forms.TextInput(attrs={"class": "form-control",}),# "readonly": True}),
+            "username": forms.TextInput(attrs={"class": "form-control"}),  # editable для теста
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
         }

@@ -61,11 +61,9 @@ class UserUpdateView(View):
 
     def dispatch(self, request, *args, **kwargs):
         self.user_obj = get_object_or_404(User, pk=kwargs["pk"])
-
         if request.user != self.user_obj:
             messages.error(request, _("You cannot edit another user's profile."))
             return redirect("users:index")
-
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -74,12 +72,10 @@ class UserUpdateView(View):
 
     def post(self, request, *args, **kwargs):
         form = UserUpdateForm(request.POST, instance=self.user_obj)
-
         if form.is_valid():
             form.save()
             messages.success(request, _("User has been updated successfully."))
             return redirect("users:index")
-
         return render(request, self.template_name, {"form": form})
 
 
