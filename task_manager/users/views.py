@@ -25,7 +25,7 @@ class UsersCreateView(CreateView):
     model = User
     form_class = CreateForm
     template_name = 'users/create.html'
-    success_url = reverse_lazy('users:login')
+    success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         response = super().form_valid(form)
