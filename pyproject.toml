@@ -15,3 +15,6 @@ dependencies = [
     "uvicorn>=0.38.0",
     "whitenoise>=6.11.0",
 ]
+
+[tool.poetry.dependencies]
+psycopg2-binary = "2.9.11"
