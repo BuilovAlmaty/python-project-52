@@ -50,7 +50,7 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ["username", "first_name", "last_name"]
         widgets = {
-            "username": forms.TextInput(attrs={"class": "form-control", "readonly": True}),
+            "username": forms.TextInput(attrs={"class": "form-control",}),# "readonly": True}),
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
         }
