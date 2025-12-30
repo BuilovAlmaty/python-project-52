@@ -39,7 +39,7 @@
                     </span>
                 </li>
                 <li class="nav-item">
-                    <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                    <form method="post" action="{% url 'logout' %}" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="nav-link btn btn-link px-2">
                             {% trans "Logout" %}
@@ -48,7 +48,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a href="{% url 'users:login' %}" class="nav-link px-2">
+                    <a href="{% url 'login' %}" class="nav-link px-2">
                         {% trans "Login" %}
                     </a>
                 </li>
