@@ -18,9 +18,9 @@ dependencies = [
     "django-filter>=23.1"
 ]
 
-[tool.uv.build-system]
-backend = "setuptools.build_meta"
-requires = ["setuptools>=65", "wheel"]
+#[tool.uv.build-system]
+#backend = "setuptools.build_meta"
+#requires = ["setuptools>=65", "wheel"]
 
 [tool.setuptools.packages.find]
 where = ["."]
