@@ -8,6 +8,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
+
                 <h1 class="h1 mb-4 fw-normal text-center">{% block title %}{% endblock %}</h1>
 
                 {% if form %}
