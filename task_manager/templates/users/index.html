@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'layout.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <h1 class="h1 mb-4 fw-normal text-left">{% trans "Users" %}</h1>
+    {% if users %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{% trans "Username" %}</th>
+            <th>{% trans "Fullname" %}</th>
+            <th>{% trans "Create date" %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for usr in users %}
+        <tr>
+            <td>{{ usr.id }}</td>
+            <td>{{ usr.username }}</td>
+            <td>{{ usr.first_name }} {{ usr.last_name }}</td>
+            <td>{{ usr.date_joined }}</td>
+            <td>
+                <a href="{% url 'users:update' usr.pk %}">{% trans "Edit" %}</a>
+                <br>
+                <a href="{% url 'users:delete' usr.pk %}">{% trans "Remove" %}</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -7,17 +7,14 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-5 col-lg-4">
-            <h1 class="h3 mb-4 text-center">{% trans "Sign in" %}</h1>
+            <h1 class="h1 mb-4 fw-normal text-center">{% trans "Please sign in" %}</h1>
             <form method="post">
                 {% csrf_token %}
-
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger">
                         {{ form.non_field_errors }}
                     </div>
                 {% endif %}
-
-                <!-- Username -->
                 <div class="form-floating mb-3">
                     <input
                         type="text"
@@ -29,8 +26,6 @@
                     >
                     <label for="id_username">{% trans "Username" %}</label>
                 </div>
-
-                <!-- Password -->
                 <div class="form-floating mb-3">
                     <input
                         type="password"
@@ -45,7 +40,7 @@
 
                 <div class="d-grid">
                     <button class="btn btn-primary py-2" type="submit">
-                        {% trans "Login" %}
+                        {% trans "Sign in" %}
                     </button>
                 </div>
             </form>

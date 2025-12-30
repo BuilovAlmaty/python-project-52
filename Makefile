@@ -28,3 +28,6 @@ collectstatic:
 
 migrate:
 	$(MANAGE) migrate
+
+test:
+	uv run manage.py test

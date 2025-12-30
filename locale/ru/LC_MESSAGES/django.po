@@ -1,41 +1,256 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-22 08:06+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2025-12-26 10:00+0000\n"
+"PO-Revision-Date: 2025-12-26 10:00+0000\n"
+"Last-Translator: YOUR NAME <EMAIL@EXAMPLE.COM>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/templates/layout.html:10
 msgid "Task manager"
 msgstr "Менеджер задач"
 
-#: task_manager/templates/layout.html:23
 msgid "Home"
 msgstr "Главная"
 
-#: task_manager/templates/layout.html:25
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/layout.html:28
 msgid "Login"
 msgstr "Вход"
 
-#: task_manager/templates/layout.html:29
+msgid "Logout"
+msgstr "Выход"
+
 msgid "Sign up"
-msgstr "Регистрация"
+msgstr "Зарегистрироваться"
+
+msgid "Please sign up"
+msgstr "Пожалуйста зарегистрируйтесь"
+
+msgid "Please sign in"
+msgstr "Пожалуйста войдите в систему"
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Sign in"
+msgstr "Войти"
+
+msgid ""
+"Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./"
+"+/-/_."
+msgstr ""
+"Required field. Maximum 150 characters. Only letters, digits, and symbols "
+"@/./+/-/_ are allowed."
+
+msgid "Обязательное поле. Используйте хотя бы 8 символов."
+msgstr "Required field. Use at least 8 characters."
+
+msgid "Введите пароль ещё раз для подтверждения."
+msgstr "Enter the password again for confirmation."
+
+msgid "Обязательное поле. Только буквы."
+msgstr "Required field. Only letters are allowed."
+
+msgid "You have successfully logged in."
+msgstr "Вы залогинены."
+
+msgid "Invalid username or password."
+msgstr "Неверный логин или пароль."
+
+msgid "You are logged out."
+msgstr "Вы разлогинены."
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Full name"
+msgstr "Полное имя"
+
+msgid "Fullname"
+msgstr "Полное имя"
+
+msgid "Create date"
+msgstr "Дата создания"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "User has been updated successfully."
+msgstr "Пользователь успешно изменен."
+
+msgid "User not updated."
+msgstr "Пользователь не изменен."
+
+msgid "User not created."
+msgstr "Пользователь не создан."
+
+msgid "User has been created successfully."
+msgstr "Пользователь успешно зарегистрирован."
+
+msgid "User has been deleted successfully."
+msgstr "Пользователь успешно удален."
+
+msgid "Editing an user"
+msgstr "Редактирование пользователя"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "You cannot edit another user's profile."
+msgstr "У вас нет прав для изменения другого пользователя."
+
+msgid "You are not logged in! Please log in."
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
+
+msgid "Введите оба пароля."
+msgstr "Input both passwords."
+
+msgid "Welcome to the Task manager"
+msgstr "Добро пожаловать в менеджер задач"
+
+msgid "Statuses"
+msgstr "Статусы"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Create status"
+msgstr "Создать статус"
+
+msgid "Create"
+msgstr "Создать"
+
+msgid "Editing a status"
+msgstr "Редактирование статуса"
+
+msgid "Deleting a status"
+msgstr "Удаление статуса"
+
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+msgid "Are you sure you want to delete"
+msgstr "Вы действительно хотите удалить"
+
+msgid "Status has been created successfully."
+msgstr "Статус успешно создан."
+
+msgid "Deleting an user"
+msgstr "Удаление пользователя"
+
+msgid "Status has been updated successfully."
+msgstr "Статус успешно изменен"
+
+msgid "Required field"
+msgstr "Обязательное поле"
+
+msgid "Task has been created successfully."
+msgstr "Задача успешно создана."
+
+msgid "Task has been updated successfully."
+msgstr "Задача успешно изменена"
+
+msgid "Task not created."
+msgstr "Задача не создана"
+
+msgid "Tasks"
+msgstr "Задачи"
+
+msgid "Create task"
+msgstr "Создать задачу"
+
+msgid "Edit task"
+msgstr "Редактировать задачу"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Executor"
+msgstr "Исполнитель"
+
+msgid "Title"
+msgstr "Название"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Current state"
+msgstr "Текущее состояние"
+
+msgid "Cannot delete user because they are used in other objects."
+msgstr "Невозможно удалить пользователя, потому что он используется."
+
+msgid "Cannot delete status because they are used in other objects."
+msgstr "Невозможно удалить статус, потому что он используется."
+
+msgid "Task save error."
+msgstr "Ошибка сохранения задачи."
+
+msgid "Task with this title already exists."
+msgstr "Задача с таким заголовком уже существует."
+
+msgid "You cannot edit this task."
+msgstr "Вы не можете изменять эту задачу. Недостаточно прав."
+
+msgid "Task has been deleted successfully."
+msgstr "Задача успешно удалена."
+
+msgid "Only author can delete the task."
+msgstr "Задачу может удалить только ее автор"
+
+msgid "Cannot delete task because they are used in other objects."
+msgstr "Невозможно удалить задачу, потому что она используется."
+
+msgid "Deleting a task"
+msgstr "Удаление задачи"
+
+msgid "View task"
+msgstr "Просмотр задачи"
+
+msgid "Labels"
+msgstr "Метки"
+
+msgid "Deleting a label"
+msgstr "Удаление метки"
+
+msgid "Create label"
+msgstr "Создать метку"
+
+msgid "Label has been created successfully."
+msgstr "Метка успешно создана."
+
+msgid "Label with this name already exists."
+msgstr "Метка с таким именем уже существует"
+
+msgid "Label has been updated successfully."
+msgstr "Метка успешно изменена."
+
+msgid "Edit label"
+msgstr "Редактировать метку"
+
+msgid "Label has been deleted successfully."
+msgstr "Метка успешно удалена"
+
+msgid "Cannot delete label because they are used in other objects."
+msgstr "Невозможно удалить метку, потому что она используется."
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "Only your tasks"
+msgstr "Только свои задачи"
+
+msgid "Label"
+msgstr "Метка"

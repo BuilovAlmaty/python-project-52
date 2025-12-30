@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'layout.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <h1 class="my-4">{% trans "View task" %}</h1>
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h2>{{ task.title }}</h2>
+        </div>
+        <div class="card-body bg-light">
+            <p>{{ task.description }}</p>
+            <hr>
+            <div class="container">
+                <div class="row p-1">
+                    <div class="col">{% trans "Author" %}</div>
+                    <div class="col">{{ task.author }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">{% trans "Executor" %}</div>
+                    <div class="col">{{ executor }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">{% trans "Status" %}</div>
+                    <div class="col">{{ task.current_state }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">{% trans "Create date" %}</div>
+                    <div class="col">{{ task.created_at }}</div>
+                </div>
+                {% if task.labels%}
+                <div class="row p-1">
+                    <div class="col">
+                        <h6>Метки:</h6>
+                        <ul>
+                            {% for lb in task.labels.all %}
+                            <li>{{ lb.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="row p-1">
+                    <div class="col">
+                        <a href="{% url 'tasks:update' task.pk %}">{% trans "Edit" %}</a>
+                        <br>
+                        <a href="{% url 'tasks:delete' task.pk %}">{% trans "Remove" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

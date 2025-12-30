@@ -1,4 +1,4 @@
-from permissions import has_permission
+from .permissions import has_permission
 
 
 __all__ = [

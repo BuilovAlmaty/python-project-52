@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'layout.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <h1 class="my-4">{% translate "Tasks" %}</h1>
+
+    <a href="{% url 'tasks:create' %}" class="btn btn-primary mb-4">{% translate "Create task" %}</a>
+    <form method="get" class="p-4 bg-light rounded border shadow-sm mb-4">
+        <div class="mb-3">
+            <label for="id_status" class="form-label">{% trans "Status" %}</label>
+            {{ filter.form.status }}
+        </div>
+        <div class="mb-3">
+            <label for="id_executor" class="form-label">{% trans "Executor" %}</label>
+            {{ filter.form.executor }}
+        </div>
+        <div class="mb-3">
+            <label for="id_labels" class="form-label">{% trans "Label" %}</label>
+            {{ filter.form.labels }}
+        </div>
+        <div class="form-check mb-3">
+            {{ filter.form.user_tasks }}
+            <label class="form-check-label" for="{{ filter.form.user_tasks.id_for_label }}">
+                {% trans "Only your tasks" %}
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">{% translate "Show" %}</button>
+    </form>
+    {% if tasks %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Author" %}</th>
+            <th>{% trans "Executor" %}</th>
+            <th>{% trans "Create date" %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td><a href="{% url 'tasks:show' task.pk %}">{{ task.title }}</a></td>
+            <td>{{ task.current_state }}</td>
+            <td>{{ task.author.first_name }} {{ task.author.last_name }}</td>
+            <td>{{ task.executor }}</td>
+            <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+            <td>
+                <a href="{% url 'tasks:update' task.pk %}">{% trans "Edit" %}</a><br>
+                <a href="{% url 'tasks:delete' task.pk %}">{% trans "Remove" %}</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endblock %}
+</div>

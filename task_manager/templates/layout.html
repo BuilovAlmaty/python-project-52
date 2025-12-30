@@ -15,15 +15,49 @@
     <nav class="py-2 bg-body-tertiary border-bottom">
         <div class="container d-flex flex-wrap align-items-center">
             <ul class="nav me-auto">
-                <li class="nav-item"><a href="#" class="nav-link px-2 active">{% trans "Home" %}</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">{% trans "Users" %}</a></li>
+                <li class="nav-item"><a href="/" class="nav-link px-2 active">{% trans "Home" %}</a></li>
+                <li class="nav-item">
+                    <a href="{% url 'users:index' %}" class="nav-link px-2">{% trans "Users" %}</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'statuses:index' %}" class="nav-link px-2">{% trans "Statuses" %}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'labels:index' %}" class="nav-link px-2">{% trans "Labels" %}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'tasks:index' %}" class="nav-link px-2">{% trans "Tasks" %}</a>
+                </li>
+                {% endif %}
             </ul>
-
             <ul class="nav align-items-center">
-                <li class="nav-item"><a href="#" class="nav-link px-2">{% trans "Login" %}</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">{% trans "Sign up" %}</a></li>
-
-                <!-- Dropdown выбора языка -->
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link px-2 text-muted">
+                        {{ user.username }}
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link px-2">
+                            {% trans "Logout" %}
+                        </button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'users:login' %}" class="nav-link px-2">
+                        {% trans "Login" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'users:create' %}" class="nav-link px-2">
+                        {% trans "Sign up" %}
+                    </a>
+                </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <form action="{% url 'set_language' %}" method="post" class="m-0">
                         {% csrf_token %}
@@ -42,6 +76,20 @@
             </ul>
         </div>
     </nav>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {% else %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     {% block content %}
     {% endblock %}
 </main>

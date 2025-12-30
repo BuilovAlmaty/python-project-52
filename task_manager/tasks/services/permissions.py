@@ -1,20 +1,27 @@
-from task_manager.task.models import TaskMembership as TM
+from task_manager.tasks.models import TaskMembership as TM
 
 
 ROLE_PERMISSIONS = {
     'admin': {
         'change_state',
         'edit_task',
-        'assign_users',
         'delete_task',
     },
     'executor': {
-        'change_state'
+        'change_state',
+        'edit_task',
+    },
+    'creator': {
+        'change_state',
+        'edit_task',
+        'delete_task',
     },
     'viewer': set(),
 }
 
 
 def has_permission(user, task, permission):
-    record = TM.objects.get(user=user, task=task)
+    record = TM.objects.filter(user=user, task=task).first()
+    if not record:
+        return False
     return permission in ROLE_PERMISSIONS[record.role]

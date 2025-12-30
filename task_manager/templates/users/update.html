@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'users/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Editing an user" %}{% endblock %}
+
+{% block btn %}{% trans "Confirm" %}{% endblock %}
