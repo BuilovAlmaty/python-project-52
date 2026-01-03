@@ -38,12 +38,12 @@ class UserUpdateForm(forms.ModelForm):
     password1 = forms.CharField(
         label=_("Пароль"),
         required=False,
-        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Password")})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Пароль")})
     )
     password2 = forms.CharField(
         label=_("Подтверждение пароля"),
         required=False,
-        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Select an executor")})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Подтверждение пароля")})
     )
 
     class Meta:

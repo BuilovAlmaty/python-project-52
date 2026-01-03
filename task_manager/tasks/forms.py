@@ -27,6 +27,9 @@ class TaskCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['executor'].label_from_instance = (
+            lambda user: f"{user.first_name} {user.last_name}".strip()
+        )
         for field_name, field in self.fields.items():
             if field_name != 'labels':
                 field.widget.attrs['class'] = 'form-control'
