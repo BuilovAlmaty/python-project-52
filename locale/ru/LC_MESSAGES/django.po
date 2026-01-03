@@ -148,13 +148,16 @@ msgid "Are you sure you want to delete"
 msgstr "Вы действительно хотите удалить"
 
 msgid "Status has been created successfully."
-msgstr "Статус успешно создан."
+msgstr "Статус успешно создан"
 
 msgid "Deleting an user"
 msgstr "Удаление пользователя"
 
 msgid "Status has been updated successfully."
 msgstr "Статус успешно изменен"
+
+msgid "Status has been deleted successfully."
+msgstr "Статус успешно удален"
 
 msgid "Required field"
 msgstr "Обязательное поле"
@@ -208,7 +211,7 @@ msgid "You cannot edit this task."
 msgstr "Вы не можете изменять эту задачу. Недостаточно прав."
 
 msgid "Task has been deleted successfully."
-msgstr "Задача успешно удалена."
+msgstr "Задача успешно удалена"
 
 msgid "Only author can delete the task."
 msgstr "Задачу может удалить только ее автор"
@@ -232,13 +235,13 @@ msgid "Create label"
 msgstr "Создать метку"
 
 msgid "Label has been created successfully."
-msgstr "Метка успешно создана."
+msgstr "Метка успешно создана"
 
 msgid "Label with this name already exists."
 msgstr "Метка с таким именем уже существует"
 
 msgid "Label has been updated successfully."
-msgstr "Метка успешно изменена."
+msgstr "Метка успешно изменена"
 
 msgid "Edit label"
 msgstr "Редактировать метку"
