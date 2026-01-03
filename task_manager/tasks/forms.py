@@ -42,10 +42,9 @@ class TaskCreateForm(forms.ModelForm):
             "labels",
         ]
         labels = {
-            'title': _('Title'),
+            'title': _('Name'),
             'description': _('Description'),
-            'current_state': _('Current state'),
-            'name': _('Name'),
+            'current_state': _('Status'),
         }
         error_messages = {
             "title": {
