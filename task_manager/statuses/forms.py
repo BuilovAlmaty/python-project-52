@@ -14,6 +14,9 @@ class StatusCreateForm(forms.ModelForm):
         fields = [
             "name",
         ]
+        labels = {
+            "name": _("Name"),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
