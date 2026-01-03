@@ -45,6 +45,7 @@ class TaskCreateForm(forms.ModelForm):
             'title': _('Title'),
             'description': _('Description'),
             'current_state': _('Current state'),
+            'name': _('Name'),
         }
         error_messages = {
             "title": {
