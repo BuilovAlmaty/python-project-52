@@ -51,8 +51,10 @@ class TasksCreateView(CreateView):
     def form_valid(self, form):
         try:
             with transaction.atomic():
+                executor = form.cleaned_data.get('executor')
                 task = form.save(commit=False)
                 task.author = self.request.user
+                task.executor = executor
                 task.save()
                 form.save_m2m()
 
@@ -61,7 +63,7 @@ class TasksCreateView(CreateView):
                     task=task,
                     role='creator'
                 )
-                executor = form.cleaned_data.get('executor')
+
                 if executor:
                     TaskMembership.objects.create(
                         user=executor,
