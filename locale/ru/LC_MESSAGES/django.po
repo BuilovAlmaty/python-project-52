@@ -260,3 +260,6 @@ msgstr "Только свои задачи"
 
 msgid "Label"
 msgstr "Метка"
+
+msgid "Select an executor"
+msgstr "Выберите исполнителя"

@@ -13,7 +13,8 @@ class TaskCreateForm(forms.ModelForm):
     executor = forms.ModelChoiceField(
         queryset=User.objects.all(),
         required=False,
-        label=_('Executor')
+        label=_('Executor'),
+        widget=forms.Select(attrs={'class': 'form-control', 'data-placeholder': 'Выберите исполнителя'})
     )
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
