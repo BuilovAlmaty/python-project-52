@@ -34,9 +34,7 @@ class TasksListView(ListView):
         ).values('full_name')[:1]
 
 
-        qs = Task.objects.select_related('author', 'current_state').annotate(
-            executor=Subquery(executor_sq)
-        )
+        qs = Task.objects.select_related('author', 'current_state')
         if self.request.GET:
             self.filterset = TaskFilter(
                 self.request.GET,
