@@ -4,7 +4,8 @@ from .forms import TaskCreateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.db.models import OuterRef, Subquery, functions, Value
+from django.db.models import OuterRef, Subquery, Value
+from django.db.models.functions import Concat
 from django.db import transaction, IntegrityError
 from .services.permissions import has_permission
 from django.db.models.deletion import ProtectedError
@@ -26,15 +27,17 @@ class TasksListView(ListView):
             task=OuterRef('pk'),
             role='executor'
         ).annotate(
-            full_name=functions.Concat(
+            full_name=Concat(
                 'user__first_name',
                 Value(' '),
                 'user__last_name'
             )
         ).values('full_name')[:1]
-
-
-        qs = Task.objects.select_related('author', 'current_state')
+        qs = (
+            Task.objects
+            .select_related('author', 'current_state')
+            .annotate(executor_name=Subquery(executor_sq))
+        )
         if self.request.GET:
             self.filterset = TaskFilter(
                 self.request.GET,
