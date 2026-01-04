@@ -37,12 +37,20 @@ class TasksListView(ListView):
         qs = Task.objects.select_related('author', 'current_state').annotate(
             executor=Subquery(executor_sq)
         )
+        if self.request.GET:
+            self.filterset = TaskFilter(
+                self.request.GET,
+                queryset=qs,
+                request=self.request
+            )
+            return self.filterset.qs
+
         self.filterset = TaskFilter(
-            self.request.GET,
+            None,
             queryset=qs,
             request=self.request
         )
-        return self.filterset.qs
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
