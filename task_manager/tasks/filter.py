@@ -25,7 +25,7 @@ class TaskFilter(django_filters.FilterSet):
         label=_('Label'),
         widget=forms.Select(attrs={'class': 'form-select'}),
     )
-    user_tasks = django_filters.CharFilter(
+    user_tasks = django_filters.BooleanFilter(
         method='filter_user_tasks',
         label=_('Only your tasks'),
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -38,7 +38,9 @@ class TaskFilter(django_filters.FilterSet):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
-        self.form.fields['executor'].label_from_instance = lambda u: f'{u.first_name} {u.last_name}'
+        self.form.fields['executor'].label_from_instance = (
+            lambda u: u.get_full_name() or u.username
+        )
 
     def filter_executor(self, queryset, name, value):
         if not value:
@@ -51,10 +53,11 @@ class TaskFilter(django_filters.FilterSet):
         )
 
     def filter_user_tasks(self, queryset, name, value):
-        if value in [True, 'on', '1', 'true']:
-            user = getattr(self, 'request', None)
-            if user:
-                user = getattr(user, 'user', None)
-            if user:
-                return queryset.filter(author=user)
-        return queryset
+        if not value:
+            return queryset
+
+        user = getattr(self.request, 'user', None)
+        if not user or not user.is_authenticated:
+            return queryset
+
+        return queryset.filter(author=user)
