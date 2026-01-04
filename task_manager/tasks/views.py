@@ -4,7 +4,7 @@ from .forms import TaskCreateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef, Subquery, functions, Value
 from django.db import transaction, IntegrityError
 from .services.permissions import has_permission
 from django.db.models.deletion import ProtectedError
@@ -23,8 +23,16 @@ class TasksListView(ListView):
 
     def get_queryset(self):
         executor_sq = TaskMembership.objects.filter(
-            task=OuterRef('pk'), role='executor'
-        ).values('user__username')[:1]
+            task=OuterRef('pk'),
+            role='executor'
+        ).annotate(
+            full_name=functions.Concat(
+                'user__first_name',
+                Value(' '),
+                'user__last_name'
+            )
+        ).values('full_name')[:1]
+
 
         qs = Task.objects.select_related('author', 'current_state').annotate(
             executor=Subquery(executor_sq)
@@ -82,7 +90,8 @@ class TasksCreateView(CreateView):
             return self.form_invalid(form)
 
         messages.success(self.request, _('Task has been created successfully.'))
-        return super().form_valid(form)
+        return redirect(self.get_success_url())
+        #return super().form_valid(form)
 
     def form_invalid(self, form):
         messages.error(self.request, _('Task not created.'))
@@ -203,5 +212,5 @@ class TasksDetailView(DetailView):
             .select_related("user")
             .first()
         )
-        context["executor"] = executor.user.username if executor else None
+        context["executor"] = executor.user.get_full_name() if executor else None
         return context

@@ -29,7 +29,7 @@ class TaskCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['executor'].queryset = User.objects.all()
         self.fields['executor'].label_from_instance = (
-            lambda user: f"{user.first_name} {user.last_name}".strip()
+            lambda user: user.get_full_name() or user.username
         )
         self.fields['labels'].queryset = Label.objects.all()
         for field_name, field in self.fields.items():
