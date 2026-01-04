@@ -82,7 +82,7 @@ class TasksCreateView(CreateView):
                 )
 
                 if executor:
-                    TaskMembership.objects.create(
+                    TaskMembership.objects.get_or_create(
                         user=executor,
                         task=task,
                         role='executor'
@@ -150,7 +150,7 @@ class TasksUpdateView(UpdateView):
                         old_executor_membership.delete()
 
                     if new_executor:
-                        TaskMembership.objects.create(
+                        TaskMembership.objects.get_or_create(
                             user=new_executor,
                             task=task,
                             role="executor"
