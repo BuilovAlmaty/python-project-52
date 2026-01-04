@@ -212,5 +212,9 @@ class TasksDetailView(DetailView):
             .select_related("user")
             .first()
         )
-        context["executor"] = executor.user.get_full_name() if executor else None
+        context["executor"] = (
+            executor.user.get_full_name()
+            if executor and executor.user.get_full_name()
+            else executor.user.username if executor else ""
+        )
         return context
