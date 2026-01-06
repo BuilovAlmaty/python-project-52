@@ -1,5 +1,5 @@
 from django.utils.translation import gettext_lazy as _
-from .models import TaskState
+from .models import TaskStatus
 from django import forms
 
 
@@ -10,7 +10,7 @@ HELP_TEXTS = {
 
 class StatusCreateForm(forms.ModelForm):
     class Meta:
-        model = TaskState
+        model = TaskStatus
         fields = [
             "name",
         ]

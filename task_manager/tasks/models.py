@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from task_manager.statuses.models import TaskState
+from task_manager.statuses.models import TaskStatus
 from task_manager.labels.models import Label
 
 
@@ -13,8 +13,8 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         related_name='created_tasks',
     )
-    current_state = models.ForeignKey(
-        TaskState,
+    status = models.ForeignKey(
+        TaskStatus,
         on_delete=models.PROTECT,
         related_name='tasks'
     )
@@ -48,8 +48,8 @@ class TaskMembership(models.Model):
         unique_together = ('user', 'task', 'role')
 
 
-class TaskStateHistory(models.Model):
+class TaskStatusHistory(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    state = models.ForeignKey(TaskState, on_delete=models.PROTECT)
+    status = models.ForeignKey(TaskStatus, on_delete=models.PROTECT)
     edited_by = models.ForeignKey(User, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)

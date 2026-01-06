@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
-from task_manager.tasks.models import Task, TaskMembership, TaskStateHistory
+from task_manager.tasks.models import Task, TaskMembership, TaskStatusHistory
 from .forms import TaskCreateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -33,7 +33,7 @@ class TasksListView(ListView):
         ).values('full_name')[:1]
         qs = (
             Task.objects
-            .select_related('author', 'current_state')
+            .select_related('author', 'status')
             .annotate(executor=Subquery(executor_sq))
         )
         self.filterset = TaskFilter(
@@ -79,9 +79,9 @@ class TasksCreateView(CreateView):
                         role='executor'
                     )
 
-                TaskStateHistory.objects.create(
+                TaskStatusHistory.objects.create(
                     task=task,
-                    state=task.current_state,
+                    status=task.status,
                     edited_by=self.request.user
                 )
                 self.object = task
@@ -91,7 +91,6 @@ class TasksCreateView(CreateView):
 
         messages.success(self.request, _('Task has been created successfully.'))
         return redirect(self.get_success_url())
-        #return super().form_valid(form)
 
     def form_invalid(self, form):
         messages.error(self.request, _('Task not created.'))
@@ -147,9 +146,9 @@ class TasksUpdateView(UpdateView):
                             role="executor"
                         )
 
-                TaskStateHistory.objects.create(
+                TaskStatusHistory.objects.create(
                     task=task,
-                    state=form.cleaned_data["current_state"],
+                    status=form.cleaned_data["status"],
                     edited_by=self.request.user
                 )
 

@@ -1,11 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
-from task_manager.statuses.models import TaskState
+from task_manager.statuses.models import TaskStatus
 
 
 class StatusesTests(TestCase):
     def setUp(self):
-        self.status = TaskState.objects.create(name="New")
+        self.status = TaskStatus.objects.create(name="New")
         print('test Statuses')
 
     def test_status_list_view(self):
@@ -17,7 +17,7 @@ class StatusesTests(TestCase):
         data = {'name': 'Testing'}
         response = self.client.post(reverse('statuses:create'), data)
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(TaskState.objects.filter(name='Testing').exists())
+        self.assertTrue(TaskStatus.objects.filter(name='Testing').exists())
 
     def test_status_update_view(self):
         data = {'name': 'Updated'}
@@ -29,4 +29,4 @@ class StatusesTests(TestCase):
     def test_status_delete_view(self):
         response = self.client.post(reverse('statuses:delete', args=[self.status.id]))
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(TaskState.objects.filter(id=self.status.id).exists())
+        self.assertFalse(TaskStatus.objects.filter(id=self.status.id).exists())

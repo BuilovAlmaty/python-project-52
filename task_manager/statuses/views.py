@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from task_manager.statuses.models import TaskState
+from task_manager.statuses.models import TaskStatus
 from .forms import StatusCreateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render
 
 # Create your views here.
 class StatusesListView(ListView):
-    model = TaskState
+    model = TaskStatus
     template_name = 'statuses/index.html'
     context_object_name = 'statuses'
 
@@ -20,7 +20,7 @@ class StatusesListView(ListView):
 
 
 class StatusesCreateView(CreateView):
-    model = TaskState
+    model = TaskStatus
     form_class = StatusCreateForm
     template_name = 'statuses/create.html'
     success_url = reverse_lazy('statuses:index')
@@ -35,7 +35,7 @@ class StatusesCreateView(CreateView):
 
 
 class StatusesUpdateView(UpdateView):
-    model = TaskState
+    model = TaskStatus
     form_class = StatusCreateForm
     template_name = "statuses/update.html"
     success_url = reverse_lazy("statuses:index")
@@ -46,7 +46,7 @@ class StatusesUpdateView(UpdateView):
 
 
 class StatusesDeleteView(DeleteView):
-    model = TaskState
+    model = TaskStatus
     template_name = "statuses/delete.html"
     success_url = reverse_lazy("statuses:index")
 

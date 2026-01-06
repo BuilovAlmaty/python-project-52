@@ -3,14 +3,14 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from .models import Task, TaskMembership
-from task_manager.statuses.models import TaskState
+from task_manager.statuses.models import TaskStatus
 from task_manager.labels.models import Label
 
 
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
-        field_name='current_state',
-        queryset=TaskState.objects.all(),
+        field_name='status',
+        queryset=TaskStatus.objects.all(),
         label=_('Status'),
         widget=forms.Select(attrs={'class': 'form-select'}),
     )

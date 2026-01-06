@@ -43,14 +43,14 @@ class TaskCreateForm(forms.ModelForm):
         fields = [
             "name",
             "description",
-            "current_state",
+            "status",
             "executor",
             "labels",
         ]
         labels = {
             'name': _('Name'),
             'description': _('Description'),
-            'current_state': _('Status'),
+            'status': _('Status'),
         }
         error_messages = {
             "name": {
