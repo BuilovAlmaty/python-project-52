@@ -64,4 +64,4 @@ class LabelsDeleteView(DeleteView):
                 request,
                 _("Cannot delete label because they are used in other objects.")
             )
-        return redirect("labels:index")
+        return redirect(self.success_url)
