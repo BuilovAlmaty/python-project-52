@@ -10,9 +10,6 @@ from django.db import transaction, IntegrityError
 from .services.permissions import has_permission
 from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect, render
-from task_manager.labels.models import Label
-from task_manager.statuses.models import TaskState
-from django.contrib.auth.models import User
 from .filter import TaskFilter
 
 
@@ -23,6 +20,7 @@ class TasksListView(ListView):
     context_object_name = 'tasks'
 
     def get_queryset(self):
+        #получаем исполнителя в виде строки
         executor_sq = TaskMembership.objects.filter(
             task=OuterRef('pk'),
             role='executor'
@@ -36,22 +34,25 @@ class TasksListView(ListView):
         qs = (
             Task.objects
             .select_related('author', 'current_state')
-            .annotate(executor_name=Subquery(executor_sq))
+            #.annotate(executor_name=Subquery(executor_sq)) 999
+            .annotate(executor=Subquery(executor_sq))
         )
+        #если есть данные фильтра
         if self.request.GET:
             self.filterset = TaskFilter(
                 self.request.GET,
                 queryset=qs,
-                request=self.request
+                request=self.request,
+                user=self.request.user
             )
-            return self.filterset.qs
+            return self.filterset.qs.distinct().order_by('pk')
 
         self.filterset = TaskFilter(
             None,
             queryset=qs,
             request=self.request
         )
-        return self.filterset.qs.distinct()
+        return self.filterset.qs.distinct().order_by('pk')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

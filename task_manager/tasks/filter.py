@@ -35,12 +35,13 @@ class TaskFilter(django_filters.FilterSet):
         model = Task
         fields = ['status', 'executor', 'labels', 'user_tasks']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.form.fields['executor'].label_from_instance = (
             lambda u: u.get_full_name() or u.username
         )
+        self.user = user
 
     def filter_executor(self, queryset, name, value):
         if not value:
@@ -56,7 +57,7 @@ class TaskFilter(django_filters.FilterSet):
         if not value:
             return queryset
 
-        user = getattr(self.request, 'user', None)
+        user = self.user
         if not user or not user.is_authenticated:
             return queryset
 

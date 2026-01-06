@@ -20,7 +20,7 @@ class Task(models.Model):
     )
     labels = models.ManyToManyField(
         Label,
-        related_name='tasks',
+        related_name='labels',
         blank=True,
     )
 
@@ -45,7 +45,7 @@ class TaskMembership(models.Model):
     )
 
     class Meta:
-        unique_together = ('user', 'task')
+        unique_together = ('user', 'task', 'role')
 
 
 class TaskStateHistory(models.Model):
