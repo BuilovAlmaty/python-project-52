@@ -5,7 +5,7 @@ from django import forms
 from task_manager.labels.models import Label
 
 HELP_TEXTS = {
-    "title": _("Required field"),
+    "name": _("Required field"),
 }
 
 
@@ -41,19 +41,19 @@ class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
-            "title",
+            "name",
             "description",
             "current_state",
             "executor",
             "labels",
         ]
         labels = {
-            'title': _('Name'),
+            'name': _('Name'),
             'description': _('Description'),
             'current_state': _('Status'),
         }
         error_messages = {
-            "title": {
-                "unique": _("Task with this title already exists."),
+            "name": {
+                "unique": _("Task with this name already exists."),
             }
         }

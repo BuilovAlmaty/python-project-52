@@ -16,22 +16,22 @@ class TaskTests(TestCase):
 
     def test_task_create(self):
         data = {
-            'title': 'Test Task',
+            'name': 'Test Task',
             'description': 'Description',
             'current_state': self.state.id,
             'labels': [self.label.id],
         }
         response = self.client.post(reverse('tasks:create'), data)
         self.assertEqual(response.status_code, 302)
-        task = Task.objects.get(title='Test Task')
+        task = Task.objects.get(name='Test Task')
         self.assertEqual(task.author, self.user)
         self.assertIn(self.label, task.labels.all())
 
     def test_task_update_view(self):
-        task = Task.objects.create(title='Old Task', description='Old', current_state=self.state, author=self.user)
+        task = Task.objects.create(name='Old Task', description='Old', current_state=self.state, author=self.user)
         TaskMembership.objects.create(task=task, user=self.user, role='creator')
         data = {
-            'title': task.title,
+            'name': task.name,
             'description': 'Updated',
             'current_state': self.state.id,
             'labels': [self.label.id],
@@ -43,7 +43,7 @@ class TaskTests(TestCase):
         self.assertIn(self.label, task.labels.all())
 
     def test_task_delete_view(self):
-        task = Task.objects.create(title='Delete Task', description='To delete', current_state=self.state, author=self.user)
+        task = Task.objects.create(name='Delete Task', description='To delete', current_state=self.state, author=self.user)
         TaskMembership.objects.create(task=task, user=self.user, role='creator')
         response = self.client.post(reverse('tasks:delete', args=[task.id]))
         self.assertEqual(response.status_code, 302)

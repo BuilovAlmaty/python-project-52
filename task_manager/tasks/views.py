@@ -34,7 +34,6 @@ class TasksListView(ListView):
         qs = (
             Task.objects
             .select_related('author', 'current_state')
-            #.annotate(executor_name=Subquery(executor_sq)) 999
             .annotate(executor=Subquery(executor_sq))
         )
         self.filterset = TaskFilter(
@@ -182,7 +181,7 @@ class TasksDeleteView(DeleteView):
             request,
             self.template_name,
             {
-                "name": self.object.title,
+                "name": self.object.name,
             },
         )
 
