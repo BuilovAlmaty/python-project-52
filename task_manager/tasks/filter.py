@@ -20,7 +20,8 @@ class TaskFilter(django_filters.FilterSet):
         method='filter_executor',
         widget=forms.Select(attrs={'class': 'form-select'}),
     )
-    labels = django_filters.MultipleChoiceFilter(
+    labels = django_filters.ModelChoiceFilter(
+        queryset=Label.objects.all(),
         label=_('Label'),
         method='filter_labels',
         widget=forms.Select(attrs={'class': 'form-select'}),
@@ -66,4 +67,4 @@ class TaskFilter(django_filters.FilterSet):
     def filter_labels(self, queryset, name, value):
         if not value:
             return queryset
-        return queryset.filter(labels__in=value).distinct()
+        return queryset.filter(labels=value)
