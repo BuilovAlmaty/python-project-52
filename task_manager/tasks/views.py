@@ -37,20 +37,11 @@ class TasksListView(ListView):
             #.annotate(executor_name=Subquery(executor_sq)) 999
             .annotate(executor=Subquery(executor_sq))
         )
-        #если есть данные фильтра
-        if self.request.GET:
-            self.filterset = TaskFilter(
-                self.request.GET,
-                queryset=qs,
-                request=self.request,
-                user=self.request.user
-            )
-            return self.filterset.qs.distinct().order_by('pk')
-
         self.filterset = TaskFilter(
-            None,
+            self.request.GET or None,
             queryset=qs,
-            request=self.request
+            request=self.request,
+            user=self.request.user
         )
         return self.filterset.qs.distinct().order_by('pk')
 
