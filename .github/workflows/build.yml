@@ -2,13 +2,13 @@ name: Build
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
 
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,15 +18,22 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: |
-          pip install uv
-          make build
+      - name: Install uv
+        run: pip install uv
 
-      - name: Run tests
+      - name: Build project
+        run: make build
+
+      - name: Install dependencies (CI)
         run: make install_ci
+
+      - name: Run tests with coverage
+        run: make sq_test
         env:
           DJANGO_SETTINGS_MODULE: task_manager.settings
+
+      - name: Check coverage file
+        run: ls -lh coverage.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
