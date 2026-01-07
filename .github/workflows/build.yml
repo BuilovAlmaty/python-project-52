@@ -33,11 +33,11 @@ jobs:
 
       # 5️⃣ Установка зависимостей из uv.lock
       - name: Install dependencies
-        run: uv install
+        run: uv sync
 
       # 6️⃣ Установка dev-зависимостей для тестов (pytest + coverage)
       - name: Install dev dependencies
-        run: uv pip install -D pytest coverage
+        run: uv add --dev pytest coverage
 
       # 7️⃣ Запуск тестов через uv
       - name: Run tests
