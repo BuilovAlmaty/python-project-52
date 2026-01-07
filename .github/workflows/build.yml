@@ -10,11 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
@@ -23,6 +25,9 @@ jobs:
 
       - name: Build project
         run: make build
+        env:
+          SECRET_KEY: "test-secret-key"
+          DEBUG: "True"
 
       - name: Install dependencies (CI)
         run: make install_ci
@@ -41,4 +46,6 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_SCANNER_OPTS: "-Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.python.version=3.12"
+          SONAR_SCANNER_OPTS: >
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.python.version=3.12
