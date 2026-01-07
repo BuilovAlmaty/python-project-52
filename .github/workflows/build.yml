@@ -1,4 +1,5 @@
 name: Build
+
 on:
   push:
     branches:
@@ -12,25 +13,34 @@ jobs:
       # 1️⃣ Чекаут репозитория
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # лучше для SonarCloud
+          fetch-depth: 0  # нужно для SonarCloud
 
       # 2️⃣ Установка Python
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      # 3️⃣ Установка uv
+      # 3️⃣ Установка UV
       - name: Install UV
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
       - name: Add UV to PATH
         run: echo "$HOME/.uv/bin" >> $GITHUB_PATH
 
-      - name: Install dev dependencies
-        run: uv pip install pytest coverage
+      # 4️⃣ Создание виртуального окружения UV
+      - name: Create UV virtual environment
+        run: uv venv
 
-      # 4️⃣ Запуск тестов через uv с coverage
-      - name: Run tests via UV
+      # 5️⃣ Установка зависимостей из uv.lock
+      - name: Install dependencies
+        run: uv install
+
+      # 6️⃣ Установка dev-зависимостей для тестов (pytest + coverage)
+      - name: Install dev dependencies
+        run: uv pip install -D pytest coverage
+
+      # 7️⃣ Запуск тестов через uv
+      - name: Run tests
         run: uv run python -m pytest \
             task_manager/labels/tests.py \
             task_manager/statuses/tests.py \
@@ -40,7 +50,7 @@ jobs:
         env:
           DJANGO_SETTINGS_MODULE: task_manager.settings
 
-      # 5️⃣ Запуск SonarCloud анализа
+      # 8️⃣ Запуск SonarCloud анализа
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
