@@ -27,7 +27,7 @@ jobs:
         run: make build
         env:
           SECRET_KEY: "test-secret-key"
-          DEBUG: "True"
+          DEBUG: "False"
 
       - name: Install dependencies (CI)
         run: make install_ci
