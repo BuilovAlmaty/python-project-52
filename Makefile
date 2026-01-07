@@ -38,13 +38,14 @@ lint-fix:
 	uv run ruff check . --fix
 
 sq_test:
-	coverage erase
-	coverage run --source=task_manager -m pytest \
+	uv run coverage erase
+	uv run coverage run --source=task_manager -m pytest \
 		task_manager/labels/tests.py \
 		task_manager/statuses/tests.py \
 		task_manager/tasks/tests.py \
 		task_manager/users/tests.py
-	coverage xml -o coverage.xml
+	uv run coverage xml -o coverage.xml
+
 
 install_ci:
 	uv venv
