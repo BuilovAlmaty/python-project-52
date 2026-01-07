@@ -1,8 +1,10 @@
-from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
-from .models import Task
 from django import forms
+from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
+
 from task_manager.labels.models import Label
+
+from .models import Task
 
 HELP_TEXTS = {
     "name": _("Required field"),
@@ -14,7 +16,12 @@ class TaskCreateForm(forms.ModelForm):
         queryset=User.objects.all(),
         required=False,
         label=_('Executor'),
-        widget=forms.Select(attrs={'class': 'form-control', 'data-placeholder': 'Выберите исполнителя'})
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'data-placeholder': 'Выберите исполнителя',
+            }
+        )
     )
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),

@@ -1,11 +1,12 @@
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from .models import Label
-from .forms import LabelCreateForm
 from django.contrib import messages
-from django.urls import reverse_lazy
-from django.shortcuts import redirect, render
 from django.db.models.deletion import ProtectedError
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+from .forms import LabelCreateForm
+from .models import Label
 
 
 # Create your views here.
@@ -22,7 +23,10 @@ class LabelsCreateView(CreateView):
     success_url = reverse_lazy('labels:index')
 
     def form_valid(self, form):
-        messages.success(self.request, _('Label has been created successfully.'))
+        messages.success(
+            self.request,
+            _('Label has been created successfully.')
+        )
         return super().form_valid(form)
 
 
@@ -33,7 +37,10 @@ class LabelsUpdateView(UpdateView):
     success_url = reverse_lazy('labels:index')
 
     def form_valid(self, form):
-        messages.success(self.request, _('Label has been updated successfully.'))
+        messages.success(
+            self.request,
+            _('Label has been updated successfully.')
+        )
         return super().form_valid(form)
 
 
@@ -58,7 +65,10 @@ class LabelsDeleteView(DeleteView):
     def post(self, request, *args, **kwargs):
         try:
             self.object.delete()
-            messages.success(request, _("Label has been deleted successfully."))
+            messages.success(
+                request,
+                _("Label has been deleted successfully.")
+            )
         except ProtectedError:
             messages.error(
                 request,

@@ -1,16 +1,24 @@
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
-from task_manager.tasks.models import Task, TaskMembership, TaskStatusHistory
-from .forms import TaskCreateForm
-from django.urls import reverse_lazy
 from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
+from django.db import IntegrityError, transaction
 from django.db.models import OuterRef, Subquery, Value
-from django.db.models.functions import Concat
-from django.db import transaction, IntegrityError
-from .services.permissions import has_permission
 from django.db.models.deletion import ProtectedError
+from django.db.models.functions import Concat
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
+
+from task_manager.tasks.models import Task, TaskMembership, TaskStatusHistory
+
 from .filter import TaskFilter
+from .forms import TaskCreateForm
+from .services.permissions import has_permission
 
 
 # Create your views here.
@@ -20,7 +28,7 @@ class TasksListView(ListView):
     context_object_name = 'tasks'
 
     def get_queryset(self):
-        #получаем исполнителя в виде строки
+        # получаем исполнителя в виде строки
         executor_sq = TaskMembership.objects.filter(
             task=OuterRef('pk'),
             role='executor'
@@ -89,7 +97,10 @@ class TasksCreateView(CreateView):
             form.add_error(None, "Task save error.")
             return self.form_invalid(form)
 
-        messages.success(self.request, _('Task has been created successfully.'))
+        messages.success(
+            self.request,
+            _('Task has been created successfully.')
+        )
         return redirect(self.get_success_url())
 
     def form_invalid(self, form):
@@ -109,11 +120,11 @@ class TasksUpdateView(UpdateView):
             messages.error(request, _("You cannot edit this task."))
             return redirect(self.get_success_url())
 
-        executor_membership = TaskMembership.objects.filter(
+        ex_mem = TaskMembership.objects.filter(
             task=self.object,
             role="executor"
         ).first()
-        self.executor = executor_membership.user if executor_membership else None
+        self.executor = ex_mem.user if ex_mem else None
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -128,16 +139,16 @@ class TasksUpdateView(UpdateView):
                 task = form.save(commit=False)
                 new_executor = form.cleaned_data.get("executor")
 
-                old_executor_membership = TaskMembership.objects.filter(
+                old_ex_mem = TaskMembership.objects.filter(
                     task=task,
                     role="executor"
                 ).first()
 
-                old_executor = old_executor_membership.user if old_executor_membership else None
+                old_executor = old_ex_mem.user if old_ex_mem else None
 
                 if new_executor != old_executor:
-                    if old_executor_membership:
-                        old_executor_membership.delete()
+                    if old_ex_mem:
+                        old_ex_mem.delete()
 
                     if new_executor:
                         TaskMembership.objects.get_or_create(
@@ -159,7 +170,10 @@ class TasksUpdateView(UpdateView):
             form.add_error(None, _("Task save error."))
             return self.form_invalid(form)
 
-        messages.success(self.request, _("Task has been updated successfully."))
+        messages.success(
+            self.request,
+            _("Task has been updated successfully.")
+        )
         return super().form_valid(form)
 
 
@@ -189,8 +203,11 @@ class TasksDeleteView(DeleteView):
         try:
             with transaction.atomic():
                 task.delete()
-                messages.success(request, _("Task has been deleted successfully."))
-        except ProtectedError as e:
+                messages.success(
+                    request,
+                    _("Task has been deleted successfully.")
+                )
+        except ProtectedError:
             messages.error(
                 request,
                 _("Cannot delete task because they are used in other objects.")

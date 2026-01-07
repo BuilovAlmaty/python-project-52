@@ -1,6 +1,5 @@
 from task_manager.tasks.models import TaskMembership as TM
 
-
 ROLE_PERMISSIONS = {
     'admin': {
         'change_state',

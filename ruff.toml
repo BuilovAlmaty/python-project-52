@@ -11,6 +11,6 @@ select = ["E", "F", "I", "C90"]
 exclude = [
     ".git",
     "__pycache__",
-    "migrations", # Исключает папку 'migrations'
-    "task_manager.settings.py", # Исключает файл 'settings.py' (если он в корне)
+    "*/migrations/*",
+    "task_manager.settings.py",
 ]

@@ -1,11 +1,13 @@
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from task_manager.statuses.models import TaskStatus
-from .forms import StatusCreateForm
-from django.urls import reverse_lazy
 from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
 from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+from task_manager.statuses.models import TaskStatus
+
+from .forms import StatusCreateForm
 
 
 # Create your views here.
@@ -26,7 +28,10 @@ class StatusesCreateView(CreateView):
     success_url = reverse_lazy('statuses:index')
 
     def form_valid(self, form):
-        messages.success(self.request, _('Status has been created successfully.'))
+        messages.success(
+            self.request,
+            _('Status has been created successfully.')
+        )
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -41,7 +46,10 @@ class StatusesUpdateView(UpdateView):
     success_url = reverse_lazy("statuses:index")
 
     def form_valid(self, form):
-        messages.success(self.request, _('Status has been updated successfully.'))
+        messages.success(
+            self.request,
+            _('Status has been updated successfully.')
+        )
         return super().form_valid(form)
 
 
@@ -66,11 +74,15 @@ class StatusesDeleteView(DeleteView):
     def post(self, request, *args, **kwargs):
         try:
             self.object.delete()
-            messages.success(request, _("Status has been deleted successfully."))
+            messages.success(
+                request,
+                _("Status has been deleted successfully.")
+            )
         except ProtectedError:
+            ms = "Cannot delete status because they are used in other objects."
             messages.error(
                 request,
-                _("Cannot delete status because they are used in other objects.")
+                _(ms)
             )
         return redirect("statuses:index")
 

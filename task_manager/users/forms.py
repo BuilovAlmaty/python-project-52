@@ -1,12 +1,11 @@
-from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
-from django.contrib.auth.models import User
-from django.utils.translation import gettext_lazy as _
 from django import forms
+from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django.utils.translation import gettext_lazy as _
 
 HELP_TEXTS = {
-    "username": _("Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_."),
+    "username": _("Обязательное поле. Не более 150 символов."),
     "password1": _("Обязательное поле. Используйте хотя бы 8 символов."),
     "password2": _("Введите пароль ещё раз для подтверждения."),
     "first_name": _("Обязательное поле. Только буквы."),
@@ -36,21 +35,31 @@ class CreateForm(UserCreationForm):
 
 class UserUpdateForm(forms.ModelForm):
     password1 = forms.CharField(
-        label=_("Пароль"),
+        label=_("Password"),
         required=False,
-        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Пароль")})
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": _("Password")
+            }
+        )
     )
     password2 = forms.CharField(
-        label=_("Подтверждение пароля"),
+        label=_("Confirm password"),
         required=False,
-        widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": _("Подтверждение пароля")})
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": _("Confirm password")
+            }
+        )
     )
 
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name"]
         widgets = {
-            "username": forms.TextInput(attrs={"class": "form-control"}),  # editable для теста
+            "username": forms.TextInput(attrs={"class": "form-control"}),
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
         }
@@ -61,7 +70,7 @@ class UserUpdateForm(forms.ModelForm):
         p2 = cleaned_data.get("password2")
         if p1 or p2:
             if p1 != p2:
-                raise ValidationError(_("Пароли не совпадают"))
+                raise ValidationError(_("Passwords don't match."))
         return cleaned_data
 
     def save(self, commit=True):

@@ -1,14 +1,15 @@
-from django.views.generic import CreateView, ListView
-from django.urls import reverse_lazy
-from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import redirect, render, get_object_or_404
-from .forms import CreateForm, UserUpdateForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
+from django.db.models.deletion import ProtectedError
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.db.models.deletion import ProtectedError
-from django.contrib.auth import update_session_auth_hash
+from django.views.generic import CreateView, ListView
+
+from .forms import CreateForm, UserUpdateForm
 
 
 # Create your views here.
@@ -30,7 +31,10 @@ class UsersCreateView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, _('User has been created successfully.'))
+        messages.success(
+            self.request,
+            _('User has been created successfully.')
+        )
         return response
 
     def form_invalid(self, form):
@@ -63,7 +67,10 @@ class UserUpdateView(View):
     def dispatch(self, request, *args, **kwargs):
         self.user_obj = get_object_or_404(User, pk=kwargs["pk"])
         if request.user != self.user_obj:
-            messages.error(request, _("You cannot edit another user's profile."))
+            messages.error(
+                request,
+                _("You cannot edit another user's profile.")
+            )
             return redirect("users:index")
         return super().dispatch(request, *args, **kwargs)
 
@@ -87,7 +94,10 @@ class UserDeleteView(View):
     def dispatch(self, request, *args, **kwargs):
         user = get_object_or_404(User, pk=kwargs["pk"])
         if user != request.user:
-            messages.error(request, _("You cannot edit another user's profile."))
+            messages.error(
+                request,
+                _("You cannot edit another user's profile.")
+            )
             return redirect("users:index")
         self.del_user = user
         return super().dispatch(request, *args, **kwargs)

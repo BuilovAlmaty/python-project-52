@@ -263,3 +263,6 @@ msgstr "Метка"
 
 msgid "Select an executor"
 msgstr "Выберите исполнителя"
+
+msgid "Confirm password"
+msgstr "Подтверждение пароля"
