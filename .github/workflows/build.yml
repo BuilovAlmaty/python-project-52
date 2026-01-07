@@ -41,7 +41,7 @@ jobs:
 
       # 7️⃣ Запуск тестов через uv
       - name: Run tests
-        run: uv run python -m pytest \
+        run: uv run -- python -m pytest \
             task_manager/labels/tests.py \
             task_manager/statuses/tests.py \
             task_manager/tasks/tests.py \
