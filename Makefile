@@ -27,7 +27,7 @@ collectstatic:
 	$(MANAGE) collectstatic --noinput
 
 migrate:
-	$(MANAGE) migrate
+	$(MANAGE) makemigrations && $(MANAGE) migrate
 
 test:
 	uv run manage.py test

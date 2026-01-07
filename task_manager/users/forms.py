@@ -70,7 +70,10 @@ class UserUpdateForm(forms.ModelForm):
         p2 = cleaned_data.get("password2")
         if p1 or p2:
             if p1 != p2:
-                raise ValidationError(_("Passwords don't match."))
+                self.add_error(
+                    'password2',
+                    _("The passwords don't match."),
+                )
         return cleaned_data
 
     def save(self, commit=True):

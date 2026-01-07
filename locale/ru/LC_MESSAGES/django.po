@@ -266,3 +266,6 @@ msgstr "Выберите исполнителя"
 
 msgid "Confirm password"
 msgstr "Подтверждение пароля"
+
+msgid "The passwords don't match."
+msgstr "Пароли не сходятся"

@@ -72,6 +72,6 @@ class LabelsDeleteView(DeleteView):
         except ProtectedError:
             messages.error(
                 request,
-                _("Cannot delete label because they are used in other objects.")
+                _("Can't delete label because they are used in other objects.")
             )
         return redirect(self.success_url)
