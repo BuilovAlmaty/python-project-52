@@ -9,7 +9,6 @@ from task_manager.statuses.models import TaskStatus
 
 from .forms import StatusCreateForm
 
-
 STATUSES_INDEX_URL = "statuses:index"
 
 

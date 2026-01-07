@@ -13,6 +13,7 @@ from .forms import CreateForm, UserUpdateForm
 
 USERS_INDEX_URL = "users:index"
 
+
 # Create your views here.
 class UserListView(ListView):
     model = User

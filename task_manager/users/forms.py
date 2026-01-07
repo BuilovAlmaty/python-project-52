@@ -68,12 +68,11 @@ class UserUpdateForm(forms.ModelForm):
         cleaned_data = super().clean()
         p1 = cleaned_data.get("password1")
         p2 = cleaned_data.get("password2")
-        if p1 or p2:
-            if p1 != p2:
-                self.add_error(
-                    'password2',
-                    _("The passwords don't match."),
-                )
+        if (p1 or p2) and p1 != p2:
+            self.add_error(
+                'password2',
+                _("The passwords don't match."),
+            )
         return cleaned_data
 
     def save(self, commit=True):
