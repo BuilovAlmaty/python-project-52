@@ -249,7 +249,7 @@ msgstr "Редактировать метку"
 msgid "Label has been deleted successfully."
 msgstr "Метка успешно удалена"
 
-msgid "Cannot delete label because they are used in other objects."
+msgid "Can't delete label because they are used in other objects."
 msgstr "Невозможно удалить метку, потому что она используется."
 
 msgid "Show"
