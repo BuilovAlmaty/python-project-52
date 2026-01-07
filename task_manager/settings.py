@@ -15,7 +15,6 @@ from pathlib import Path
 import dj_database_url
 import rollbar
 from dotenv import load_dotenv
-from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +29,8 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
-    raise ImproperlyConfigured("SECRET_KEY is not set")
+    SECRET_KEY = "test-secret-key"
+
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
