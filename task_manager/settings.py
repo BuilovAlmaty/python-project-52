@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "python-project-52-1dky.onrender.com",
     "webserver",
+    "testserver",
 ]
 
 
