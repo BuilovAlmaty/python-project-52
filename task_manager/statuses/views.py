@@ -10,6 +10,9 @@ from task_manager.statuses.models import TaskStatus
 from .forms import StatusCreateForm
 
 
+STATUSES_INDEX_URL = "statuses:index"
+
+
 # Create your views here.
 class StatusesListView(ListView):
     model = TaskStatus
@@ -25,7 +28,7 @@ class StatusesCreateView(CreateView):
     model = TaskStatus
     form_class = StatusCreateForm
     template_name = 'statuses/create.html'
-    success_url = reverse_lazy('statuses:index')
+    success_url = reverse_lazy(STATUSES_INDEX_URL)
 
     def form_valid(self, form):
         messages.success(
@@ -56,7 +59,7 @@ class StatusesUpdateView(UpdateView):
 class StatusesDeleteView(DeleteView):
     model = TaskStatus
     template_name = "statuses/delete.html"
-    success_url = reverse_lazy("statuses:index")
+    success_url = reverse_lazy(STATUSES_INDEX_URL)
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -84,5 +87,5 @@ class StatusesDeleteView(DeleteView):
                 request,
                 _(ms)
             )
-        return redirect("statuses:index")
+        return redirect(STATUSES_INDEX_URL)
 

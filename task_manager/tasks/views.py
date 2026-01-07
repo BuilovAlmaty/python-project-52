@@ -228,9 +228,14 @@ class TasksDetailView(DetailView):
             .select_related("user")
             .first()
         )
-        context["executor"] = (
-            executor.user.get_full_name()
-            if executor and executor.user.get_full_name()
-            else executor.user.username if executor else ""
-        )
+        executor_name = ""
+
+        if executor:
+            full_name = executor.user.get_full_name()
+            if full_name:
+                executor_name = full_name
+            else:
+                executor_name = executor.user.username
+
+        context["executor"] = (executor_name)
         return context

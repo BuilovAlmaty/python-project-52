@@ -11,6 +11,7 @@ from django.views.generic import CreateView, ListView
 
 from .forms import CreateForm, UserUpdateForm
 
+USERS_INDEX_URL = "users:index"
 
 # Create your views here.
 class UserListView(ListView):
@@ -71,7 +72,7 @@ class UserUpdateView(View):
                 request,
                 _("You cannot edit another user's profile.")
             )
-            return redirect("users:index")
+            return redirect(USERS_INDEX_URL)
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
@@ -84,7 +85,7 @@ class UserUpdateView(View):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, _("User has been updated successfully."))
-            return redirect("users:index")
+            return redirect(USERS_INDEX_URL)
         return render(request, self.template_name, {"form": form})
 
 
@@ -98,7 +99,7 @@ class UserDeleteView(View):
                 request,
                 _("You cannot edit another user's profile.")
             )
-            return redirect("users:index")
+            return redirect(USERS_INDEX_URL)
         self.del_user = user
         return super().dispatch(request, *args, **kwargs)
 
@@ -120,4 +121,4 @@ class UserDeleteView(View):
                 request,
                 _("Cannot delete user because they are used in other objects.")
             )
-        return redirect("users:index")
+        return redirect(USERS_INDEX_URL)

@@ -103,12 +103,11 @@ class UserSetPasswordForm(SetPasswordForm):
 
         if not password1 and not password2:
             self._skip_password = True
-            return cleaned_data
+        else:
+            if not password1 or not password2:
+                raise ValidationError(HELP_TEXTS["pass_error"])
+            self._skip_password = False
 
-        if not password1 or not password2:
-            raise ValidationError(HELP_TEXTS["pass_error"])
-
-        self._skip_password = False
         return cleaned_data
 
     def save(self, commit=True):
