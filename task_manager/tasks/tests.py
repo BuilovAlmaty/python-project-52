@@ -21,17 +21,20 @@ class TaskTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='testuser',
-            password='password', # NOSONAR
+            password='password',  # NOSONAR
             first_name='Test',
             last_name='User'
         )
         self.other_user = User.objects.create_user(
             username='other',
-            password='password'
+            password='password'  # NOSONAR
         )
         self.status = TaskStatus.objects.create(name='New')
         self.label = Label.objects.create(name='Bug')
-        self.client.login(username='testuser', password='password')
+        self.client.login(
+            username='testuser',
+            password='password'  # NOSONAR
+        )
 
     @log_decorator
     def test_task_create_with_executor(self):

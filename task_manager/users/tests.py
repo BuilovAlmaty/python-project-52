@@ -23,9 +23,12 @@ class UsersTests(TestCase):
             username='testuser',
             first_name='Test',
             last_name='User',
-            password='password'
+            password='password'  # NOSONAR
         )
-        self.client.login(username='testuser', password='password')
+        self.client.login(
+            username='testuser',
+            password='password',  # NOSONAR
+        )
 
     @log_decorator
     def test_user_create_view(self):
@@ -33,8 +36,8 @@ class UsersTests(TestCase):
             'username': 'newuser',
             'first_name': 'New',
             'last_name': 'User',
-            'password1': 'newpassword123', # NOSONAR
-            'password2': 'newpassword123', # NOSONAR
+            'password1': 'newpassword123',  # NOSONAR
+            'password2': 'newpassword123',  # NOSONAR
         }
         response = self.client.post(reverse('users:create'), data)
         self.assertEqual(response.status_code, 302)
@@ -47,8 +50,8 @@ class UsersTests(TestCase):
             'username': 'testuser',
             'first_name': 'Updated',
             'last_name': 'User',
-            'password1': '',
-            'password2': '',
+            'password1': '',  # NOSONAR
+            'password2': '',  # NOSONAR
         }
         response = self.client.post(
             reverse(
@@ -67,8 +70,8 @@ class UsersTests(TestCase):
             'username': 'testuser',
             'first_name': 'Test',
             'last_name': 'User',
-            'password1': 'newpass1234', # NOSONAR
-            'password2': 'newpass1234', # NOSONAR
+            'password1': 'newpass1234',  # NOSONAR
+            'password2': 'newpass1234',  # NOSONAR
         }
         response = self.client.post(
             reverse(
@@ -86,7 +89,7 @@ class UsersTests(TestCase):
         self.client.logout()
         data = {
             'username': 'testuser',
-            'password': 'password', # NOSONAR
+            'password': 'password',  # NOSONAR
         }
         response = self.client.post(reverse('login'), data)
         self.assertEqual(response.status_code, 302)
@@ -117,8 +120,8 @@ class UsersTests(TestCase):
                 'username': 'testuser',
                 'first_name': 'Updated',
                 'last_name': 'User',
-                'password1': '', # NOSONAR
-                'password2': '', # NOSONAR
+                'password1': '',  # NOSONAR
+                'password2': '',  # NOSONAR
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -133,8 +136,8 @@ class UsersTests(TestCase):
                 'username': 'testuser',
                 'first_name': 'Test',
                 'last_name': 'User',
-                'password1': 'newpass1234', # NOSONAR
-                'password2': 'newpass1234', # NOSONAR
+                'password1': 'newpass1234',  # NOSONAR
+                'password2': 'newpass1234',  # NOSONAR
             }
         )
         self.assertEqual(response.status_code, 302)
@@ -145,9 +148,12 @@ class UsersTests(TestCase):
     def test_update_dispatch_denies_other_user(self):
         other = User.objects.create_user(
             username='other',
-            password='pass'
+            password='pass'  # NOSONAR
         )
-        self.client.login(username='other', password='pass')
+        self.client.login(
+            username='other',
+            password='pass',  # NOSONAR
+        )
 
         response = self.client.post(
             reverse('users:update', args=[self.user.id]),
@@ -167,9 +173,12 @@ class UsersTests(TestCase):
     def test_delete_dispatch_denies_other_user(self):
         other = User.objects.create_user(
             username='other',
-            password='pass'
+            password='pass'  # NOSONAR
         )
-        self.client.login(username='other', password='pass')
+        self.client.login(
+            username='other',
+            password='pass',  # NOSONAR
+        )
 
         response = self.client.post(
             reverse('users:delete', args=[self.user.id])
@@ -187,8 +196,8 @@ class UsersTests(TestCase):
                 'username': self.user.username,
                 'first_name': self.user.first_name,
                 'last_name': self.user.last_name,
-                'new_password1': 'abc12345', # NOSONAR
-                'new_password2': 'abc12345', # NOSONAR
+                'new_password1': 'abc12345',  # NOSONAR
+                'new_password2': 'abc12345',  # NOSONAR
             }
         )
         self.assertTrue(form.is_valid())
@@ -203,8 +212,8 @@ class UsersTests(TestCase):
                 'username': self.user.username,
                 'first_name': self.user.first_name,
                 'last_name': self.user.last_name,
-                'new_password1': '', # NOSONAR
-                'new_password2': '', # NOSONAR
+                'new_password1': '',  # NOSONAR
+                'new_password2': '',  # NOSONAR
             }
         )
         self.assertTrue(form.is_valid())
