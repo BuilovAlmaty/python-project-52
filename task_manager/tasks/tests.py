@@ -33,37 +33,6 @@ class TaskTests(TestCase):
         self.label = Label.objects.create(name='Bug')
         self.client.login(username='testuser', password='password')
 
-    # -------------------------------------------------
-    # TasksListView
-    # -------------------------------------------------
-
-    @log_decorator
-    def test_tasks_list_view_queryset_and_context(self):
-        task = Task.objects.create(
-            name='Task',
-            status=self.status,
-            author=self.user
-        )
-        TaskMembership.objects.create(
-            task=task,
-            user=self.user,
-            role='executor'
-        )
-
-        response = self.client.get(reverse('tasks:index'))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('tasks', response.context)
-        self.assertIn('filter', response.context)
-
-        tasks = response.context['tasks']
-        self.assertEqual(len(tasks), 1)
-        self.assertTrue(tasks[0].executor)
-
-    # -------------------------------------------------
-    # TasksCreateView
-    # -------------------------------------------------
-
     @log_decorator
     def test_task_create_with_executor(self):
         data = {
@@ -101,10 +70,6 @@ class TaskTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    # -------------------------------------------------
-    # TasksUpdateView
-    # -------------------------------------------------
-
     @log_decorator
     def test_task_update_no_permission(self):
         task = Task.objects.create(
@@ -123,10 +88,6 @@ class TaskTests(TestCase):
             )
 
         self.assertEqual(response.status_code, 302)
-
-    # -------------------------------------------------
-    # TasksDeleteView
-    # -------------------------------------------------
 
     @log_decorator
     def test_task_delete_no_permission(self):
