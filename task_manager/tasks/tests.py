@@ -21,7 +21,7 @@ class TaskTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='testuser',
-            password='password',
+            password='password', # NOSONAR
             first_name='Test',
             last_name='User'
         )
