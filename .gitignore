@@ -116,3 +116,4 @@ idea.log
 *.swp
 *.swo
 run.py
+.coverage

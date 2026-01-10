@@ -56,3 +56,17 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: SonarQubeScan
+        uses: sonarsource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          args: >
+            -Dsonar.projectKey=BuilovAlmaty_python-project-52
+            -Dsonar.organization=builovalmaty
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.projectName=python-project-52
+            -Dsonar.sources=task_manager
+            -Dsonar.exclusions=**/migrations/**,**/tests/**
+
